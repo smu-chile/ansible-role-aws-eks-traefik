@@ -28,7 +28,7 @@ Example Playbook
 
 # Uncomment "aws-eks-setup" role only if you are upgrading the cluster
   roles:
-    - role: ansible-role-huawei-cce-traefik
+    - role: ansible-role-aws-eks-traefik
       LB_ID: "{{ lookup('env', 'LB_ID') }}"
       LB_VIP_SUBNET_ID: "{{ lookup('env', 'LB_SUBNET_ID') }}"
       TRAEFIK_HOSTNAME: "{{ lookup('env', 'TRAEFIK_HOSTNAME') }}"
