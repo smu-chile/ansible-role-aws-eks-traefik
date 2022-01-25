@@ -44,7 +44,7 @@ metadata:
   namespace: traefik
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    external-dns.alpha.kubernetes.io/hostname: traefik-lifecycle.smu-labs.cl
+    external-dns.alpha.kubernetes.io/hostname: {{ TRAEFIK_HOSTNAME }}
 spec:
   externalTrafficPolicy: Local
   type: LoadBalancer
@@ -73,44 +73,44 @@ spec:
       name: admin
       port: 80
       targetPort: 8080
-# ---
-# kind: Ingress
-# apiVersion: networking.k8s.io/v1beta1
-# metadata:
-#   name: traefik-tls
-#   namespace: traefik
-#   annotations:
-#     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-#     cert-manager.io/cluster-issuer: letsencrypt-prod
-#     traefik.ingress.kubernetes.io/router.middlewares: traefik-test-auth@kubernetescrd
-#     external-dns.alpha.kubernetes.io/target: traefik-lifecycle.smu-labs.cl
-# spec:
-#   tls:
-#   - hosts:
-#     - {{ TRAEFIK_ADMIN_HOSTNAME }}
-#     secretName: traefik-cert-prod # < cert-manager will store the created certificate in this secret.
-#   rules:
-#     - host: {{ TRAEFIK_ADMIN_HOSTNAME }}
-#       http:
-#         paths:
-#           - path: /
-#             backend:
-#               serviceName: traefik-admin
-#               servicePort: 80
-# ---
-# kind: Ingress
-# apiVersion: networking.k8s.io/v1beta1
-# metadata:
-#   name: traefik
-#   namespace: traefik
-#   annotations:
-#     traefik.ingress.kubernetes.io/router.entrypoints: web
-# spec:
-#   rules:
-#     - host: {{ TRAEFIK_ADMIN_HOSTNAME }}
-#       http:
-#         paths:
-#           - path: /
-#             backend:
-#               serviceName: traefik-admin
-#               servicePort: 80
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: traefik-tls
+  namespace: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-test-auth@kubernetescrd
+    external-dns.alpha.kubernetes.io/target: {{ TRAEFIK_HOSTNAME }}
+spec:
+  tls:
+  - hosts:
+    - {{ TRAEFIK_ADMIN_HOSTNAME }}
+    secretName: traefik-cert-prod # < cert-manager will store the created certificate in this secret.
+  rules:
+    - host: {{ TRAEFIK_ADMIN_HOSTNAME }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: traefik-admin
+              servicePort: 80
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: traefik
+  namespace: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - host: {{ TRAEFIK_ADMIN_HOSTNAME }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: traefik-admin
+              servicePort: 80
