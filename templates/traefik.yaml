@@ -42,9 +42,6 @@ metadata:
   name: traefik
   namespace: traefik
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
     external-dns.alpha.kubernetes.io/hostname: {{ TRAEFIK_HOSTNAME }}
 spec:
   externalTrafficPolicy: Local
@@ -81,9 +78,6 @@ metadata:
   name: traefik-tls
   namespace: traefik
   annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     cert-manager.io/cluster-issuer: letsencrypt-prod
     traefik.ingress.kubernetes.io/router.middlewares: traefik-test-auth@kubernetescrd
@@ -108,9 +102,6 @@ metadata:
   name: traefik
   namespace: traefik
   annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
