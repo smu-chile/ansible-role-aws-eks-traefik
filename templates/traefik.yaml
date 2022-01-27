@@ -44,7 +44,7 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/group.name: sg-0a4954782ffb8afd0
+    alb.ingress.kubernetes.io/target-type: ip
     external-dns.alpha.kubernetes.io/hostname: {{ TRAEFIK_HOSTNAME }}
 spec:
   externalTrafficPolicy: Local
