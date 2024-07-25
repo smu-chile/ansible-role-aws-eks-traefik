@@ -23,10 +23,13 @@
   register: result
 
 - name: Helm Repo Update Traefik
-  shell: helm repo add traefik https://helm.traefik.io/traefik
+  shell: helm repo update
   register: result
 
 - name: Helm Install Traefik
   shell: helm install traefik traefik/traefik --namespace traefik
   register: result
 
+- name: Helm Upgrade Traefik
+  shell: helm upgrade traefik traefik/traefik --namespace traefik -f ../templates/values.yaml
+  register: result
