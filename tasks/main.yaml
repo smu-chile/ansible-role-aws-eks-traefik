@@ -16,7 +16,7 @@
 ## Traefik
 
 - name: Setup Traefik namespace
-  shell: echo "{{ lookup('template', 'namespace.yaml') }}" | kubectl apply -f -
+  shell: echo "{{ lookup('template', 'namespace.yaml') }}" | kubectl apply -f
 
 - name: Helm Repo Add Traefik
   shell: helm repo add traefik https://helm.traefik.io/traefik
